@@ -1,0 +1,68 @@
+// Define groups and nodes
+
+AD tenant [icon: azure-active-directory]{
+
+Onprem-User[icon: azure-users]
+Users-on-azure-System[icon: azure-user-subscriptions]
+Azure ExpressRoute[icon: azure-expressroute]
+Azure WebApplication Gateway[icon: azure-bastions]
+Peer Virtual Network[icon: azure-customer-lockbox-for-microsoft-azure]
+Azure virtual Machine[icon: virtual-machine]
+Azure Load Balancer[icon: azure-load-balancer-hub]
+Virtual Network Gateway[icon: azure-virtual-router]
+
+Virtual-Network-computing-app[icon: azure-virtual-network]{
+  Computing Services{
+  AKS Computing Cluster[icon: azure-kubernetes-services]{
+    AKS-node-pools[icon: azure-container-instances]
+    Batch-application[icon: azure-bot-services]
+  }
+  Azure-Virtual-Machine_workloads[icon: azure-virtual-clusters]{
+    Transaction-manager[icon: virtual-machine]
+    Batch-processing-machines[icon: azure-batch-accounts]
+  }
+Application Service{
+  App Server[icon: azure-web-app]
+  App-Database[icon: azure-modular-data-center]
+}
+
+}
+}
+
+Virtual-Network-website[icon: azure-virtual-network]{
+  Website-TechX{
+  Website-Server[icon: azure-web-app]
+  Website-DB[icon: azure-production-ready-database]
+}
+
+}
+
+Virtual-Network-database-layer[icon: azure-virtual-network]{
+  Azure-Managed-Data-Store{
+  Azure-Database[icon: azure-managed-database]{
+    Azure-Relational-Db[icon: azure-database-mysql-server]
+    Azure-Object-Storage[icon: azure-cosmos-db]
+  }
+  Azure-Db-Server[icon: server]
+}
+
+}
+}
+
+
+
+
+// Define connections
+Onprem-User>Azure ExpressRoute
+Users-on-azure-System>Peer Virtual Network
+
+Azure ExpressRoute,Peer Virtual Network>Azure WebApplication Gateway
+
+Azure WebApplication Gateway>Azure Load Balancer,Application Service,Virtual-Network-website
+
+
+Azure Load Balancer>AKS Computing Cluster,Azure-Virtual-Machine_workloads
+
+
+Computing Services,Website-TechX>Virtual Network Gateway>Virtual-Network-database-layer
+
